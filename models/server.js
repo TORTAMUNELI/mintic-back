@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
+const { dbConnection } = require("../db/config");
+
 class Server {
   constructor() {
     this.app = express();
@@ -29,7 +31,9 @@ class Server {
     this.app.use(express.json());
   }
 
-  connectDB() {}
+  async connectDB() {
+    await dbConnection();
+  }
 
   routes() {}
 
