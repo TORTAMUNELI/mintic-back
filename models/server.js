@@ -8,7 +8,9 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
 
-    this.paths = {};
+    this.paths = {
+      usuarios: "/api/usuarios",
+    };
 
     //Conectar a la base de datos
     this.connectDB();
@@ -35,7 +37,9 @@ class Server {
     await dbConnection();
   }
 
-  routes() {}
+  routes() {
+    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
+  }
 
   listen() {
     this.app.listen(this.port, () => {
