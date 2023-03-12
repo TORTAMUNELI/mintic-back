@@ -18,7 +18,9 @@ const usuariosGet = async (req = request, res = response) => {
 };
 
 const usuariosPost = async (req = request, res = response) => {
-  const { nombres, pApellido, sApellido, correo, password } = req.body;
+  const { nombres, pApellido, correo, password } = req.body;
+  const sApellido = req.body.sApellido || "";
+
   const usuario = new Usuario({
     nombres,
     pApellido,
