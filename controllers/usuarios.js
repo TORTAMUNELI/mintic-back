@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const Usuario = require("../models/usuario");
 
 const usuariosGet = async (req = request, res = response) => {
+  console.log("METODO GETTTT");
+
   const { limite = 5, desde = 0 } = req.query;
   const query = { estado: true };
 
@@ -18,6 +20,7 @@ const usuariosGet = async (req = request, res = response) => {
 };
 
 const usuariosPost = async (req = request, res = response) => {
+  console.log("METODO POSTTTT");
   const { nombres, pApellido, correo, password } = req.body;
   const sApellido = req.body.sApellido || "";
 
