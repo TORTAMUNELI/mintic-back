@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { validarCampos } = require("../middlewares");
-const { esRolValido, emailExiste } = require("../helpers");
-const { usuariosGet, usuariosPost } = require("../controllers");
+const { validarCampos, validarJWT, tieneRol } = require("../middlewares");
+const { esRolValido, emailExiste, usuarioExistePorId } = require("../helpers");
+const { usuariosGet, usuariosPost, usuariosPutRol } = require("../controllers");
 
 const router = Router();
 
@@ -21,6 +21,19 @@ router.post(
     validarCampos,
   ],
   usuariosPost
+);
+
+router.put(
+  "/",
+  [
+    validarJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom((id) => usuarioExistePorId(id)),
+    check("nuevoRol").custom((nuevoRol) => esRolValido(nuevoRol)),
+    tieneRol("ADMIN"),
+    validarCampos,
+  ],
+  usuariosPutRol
 );
 
 module.exports = router;

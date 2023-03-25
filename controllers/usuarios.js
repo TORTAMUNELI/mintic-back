@@ -42,7 +42,15 @@ const usuariosPost = async (req = request, res = response) => {
   });
 };
 
+const usuariosPutRol = async (req = request, res = response) => {
+  const { id, nuevoRol } = req.body;
+
+  const usuario = await Usuario.findByIdAndUpdate(id, { rol: nuevoRol });
+  res.json({ usuario });
+};
+
 module.exports = {
   usuariosGet,
   usuariosPost,
+  usuariosPutRol,
 };
