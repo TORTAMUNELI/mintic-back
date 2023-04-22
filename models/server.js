@@ -12,6 +12,7 @@ class Server {
       auth: "/api/auth",
       usuarios: "/api/usuarios",
       comentarios: "/api/comentarios",
+      historias: "/api/historias",
     };
 
     //Conectar a la base de datos
@@ -43,6 +44,7 @@ class Server {
     this.app.use(this.paths.usuarios, require("../routes/usuarios"));
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.comentarios, require("../routes/comentarios"));
+    this.app.use(this.paths.historias, require("../routes/historias"));
   }
 
   listen() {

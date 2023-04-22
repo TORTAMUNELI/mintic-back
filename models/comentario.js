@@ -5,9 +5,9 @@ const ComentarioSchema = Schema({
     type: String,
     required: [true, "El contenido es obligatorio"],
   },
-  visible: {
-    type: Boolean,
-    default: false,
+  estado: {
+    type: "String",
+    default: "solicitado",
   },
   activo: {
     type: Boolean,
@@ -18,12 +18,17 @@ const ComentarioSchema = Schema({
     ref: "Usuario",
     required: true,
   },
-
-  //   historia: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Historia",
-  //     required: true,
-  //   },
+  historia: {
+    type: Schema.Types.ObjectId,
+    ref: "Historia",
+    required: true,
+  },
 });
+
+ComentarioSchema.methods.toJSON = function () {
+  const { __v, _id, ...comentario } = this.toObject();
+  comentario.uid = _id;
+  return comentario;
+};
 
 module.exports = model("Comentario", ComentarioSchema);
