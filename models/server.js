@@ -23,11 +23,15 @@ class Server {
 
     //Rutas
     this.routes();
+
+    this.app.get("*", (req, res) => {
+      res.sendFile(__dirname, "public", "index.html");
+    });
   }
 
   middleWares() {
     //Directorio público
-    this.app.use(express.static("public"));
+    this.app.use(express.static(__dirname, "public"));
 
     //CORS
     this.app.use(cors());
@@ -45,10 +49,6 @@ class Server {
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.comentarios, require("../routes/comentarios"));
     this.app.use(this.paths.historias, require("../routes/historias"));
-
-    this.app.get("*", (req, res) => {
-      res.sendFile(__dirname + "/public/index.html");
-    });
   }
 
   listen() {
