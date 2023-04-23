@@ -45,6 +45,10 @@ class Server {
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.comentarios, require("../routes/comentarios"));
     this.app.use(this.paths.historias, require("../routes/historias"));
+
+    this.app.get("*", (req, res) => {
+      res.sendFile(__dirname + "/public/index.html");
+    });
   }
 
   listen() {
