@@ -41,6 +41,10 @@ class Server {
   }
 
   routes() {
+    this.app.get("*", (req, res) => {
+      res.sendFile(__dirname, "public", "index.html");
+    });
+
     this.app.use(this.paths.usuarios, require("../routes/usuarios"));
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.comentarios, require("../routes/comentarios"));
