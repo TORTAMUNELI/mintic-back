@@ -23,10 +23,6 @@ class Server {
 
     //Rutas
     this.routes();
-
-    this.app.get("*", (req, res) => {
-      res.sendFile(__dirname, "public", "index.html");
-    });
   }
 
   middleWares() {
