@@ -27,7 +27,7 @@ class Server {
 
   middleWares() {
     //Directorio público
-    this.app.use(express.static(__dirname, "public"));
+    this.app.use(express.static("public"));
 
     //CORS
     this.app.use(cors());
