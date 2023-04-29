@@ -1,6 +1,28 @@
 const { request, response } = require("express");
 const Historia = require("../models/historia");
 
+const historiasGetById = async (req = request, res = response) => {
+  const usuario = req.usuarioAuth._id;
+  const historias = await Historia.find({ activo: true, usuario: usuario });
+
+  res.json({ historias });
+};
+
+const historiaGetById = async (req = request, res = response) => {
+  const { id } = req.params;
+  const historia = await Historia.findById(id);
+  if (!historia.activo)
+    res.status(404).json({ msg: "No se encontro la historia" });
+
+  res.json({ historia });
+};
+
+const historiaGetByEstado = async (req = request, res = response) => {
+  const historias = await Historia.find({ activo: true, estado: "solicitado" });
+
+  res.json({ historias });
+};
+
 const historiasPut = async (req = request, res = response) => {
   const { visble, activo, usuario, ...historia } = req.body;
   const { id } = req.params;
@@ -95,4 +117,7 @@ module.exports = {
   historiasDelete,
   evaluarHistoria,
   editarVisibilidad,
+  historiasGetById,
+  historiaGetById,
+  historiaGetByEstado,
 };

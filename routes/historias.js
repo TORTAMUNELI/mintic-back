@@ -6,6 +6,9 @@ const {
   historiasDelete,
   evaluarHistoria,
   editarVisibilidad,
+  historiasGetById,
+  historiaGetById,
+  historiaGetByEstado,
 } = require("../controllers");
 const { historiaExistePorId } = require("../helpers");
 const {
@@ -16,6 +19,20 @@ const {
 } = require("../middlewares");
 
 const router = Router();
+
+router.get("/", [validarJWT], historiasGetById);
+
+router.get(
+  "/solicitudes",
+  [validarJWT, tieneRol("MOD"), validarCampos],
+  historiaGetByEstado
+);
+
+router.get(
+  "/:id",
+  [validarJWT, check("id").custom(historiaExistePorId), validarCampos],
+  historiaGetById
+);
 
 router.put(
   "/:id",

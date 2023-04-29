@@ -19,6 +19,16 @@ const usuariosGet = async (req = request, res = response) => {
   });
 };
 
+const usuarioGetById = async (req = request, res = response) => {
+  const { id } = req.params;
+  const usuario = await Usuario.findById(id);
+
+  if (!usuario)
+    return res.status(404).json({ msg: "No se encontro el usuario" });
+
+  res.json({ usuario });
+};
+
 const usuariosPost = async (req = request, res = response) => {
   console.log("METODO POSTTTT");
   const { nombres, pApellido, correo, password } = req.body;
@@ -53,4 +63,5 @@ module.exports = {
   usuariosGet,
   usuariosPost,
   usuariosPutRol,
+  usuarioGetById,
 };

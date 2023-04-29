@@ -1,6 +1,15 @@
 const { request, response } = require("express");
 const Comentario = require("../models/comentario");
 
+const comentariosGet = async (req = request, res = response) => {
+  const comentarios = await Comentario.find({
+    activo: true,
+    estado: "solicitado",
+  });
+
+  res.json({ comentarios });
+};
+
 const comentariosPost = async (req = request, res = response) => {
   const { contenido } = req.body;
   const { _id: usuario } = req.usuarioAuth;
@@ -43,6 +52,8 @@ const evaluarComentario = async (req = request, res = response) => {
   const { id } = req.params;
   const { veredicto } = req.body;
   let comentario;
+
+  console.log("POR AQUI PASOf " + veredicto);
   if (veredicto === "aprobado") {
     comentario = await Comentario.findByIdAndUpdate(id, {
       estado: "visible",
@@ -57,6 +68,7 @@ const evaluarComentario = async (req = request, res = response) => {
 };
 
 module.exports = {
+  comentariosGet,
   comentariosPost,
   comentariosPut,
   comentariosDelete,

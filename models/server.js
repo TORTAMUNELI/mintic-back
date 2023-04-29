@@ -15,6 +15,9 @@ class Server {
       historias: "/api/historias",
     };
 
+    this.app.use(express.json({ limit: "50mb" }));
+    this.app.use(express.urlencoded({ limit: "50mb" }));
+
     //Conectar a la base de datos
     this.connectDB();
 
@@ -33,7 +36,6 @@ class Server {
     this.app.use(cors());
 
     //Lectura y parseo del body
-    this.app.use(express.json());
   }
 
   async connectDB() {

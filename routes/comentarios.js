@@ -5,6 +5,7 @@ const {
   comentariosPut,
   comentariosDelete,
   evaluarComentario,
+  comentariosGet,
 } = require("../controllers");
 const {
   validarJWT,
@@ -15,6 +16,8 @@ const {
 const { historiaExistePorId, comentarioExistePorId } = require("../helpers");
 
 const router = Router();
+
+router.get("/", [validarJWT, tieneRol("MOD"), validarCampos], comentariosGet);
 
 router.put(
   "/:id",
