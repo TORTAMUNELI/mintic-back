@@ -9,6 +9,7 @@ const {
   historiasGetById,
   historiaGetById,
   historiaGetByEstado,
+  historiasGet,
 } = require("../controllers");
 const { historiaExistePorId } = require("../helpers");
 const {
@@ -27,6 +28,8 @@ router.get(
   [validarJWT, tieneRol("MOD"), validarCampos],
   historiaGetByEstado
 );
+
+router.get("/busqueda/:query", [validarJWT], historiasGet);
 
 router.get(
   "/:id",

@@ -6,6 +6,8 @@ const {
   comentariosDelete,
   evaluarComentario,
   comentariosGet,
+  comentariosGetVisibles,
+  editarVisibilidadCom,
 } = require("../controllers");
 const {
   validarJWT,
@@ -18,6 +20,8 @@ const { historiaExistePorId, comentarioExistePorId } = require("../helpers");
 const router = Router();
 
 router.get("/", [validarJWT, tieneRol("MOD"), validarCampos], comentariosGet);
+
+router.get("/visibles/:id", [validarJWT], comentariosGetVisibles);
 
 router.put(
   "/:id",
@@ -41,6 +45,17 @@ router.put(
     validarCampos,
   ],
   evaluarComentario
+);
+
+router.put(
+  "/visibilidad/:id",
+  [
+    validarJWT,
+    check("edicion").not().isEmpty(),
+    check("id").custom(comentarioExistePorId),
+    validarCampos,
+  ],
+  editarVisibilidadCom
 );
 
 router.post(

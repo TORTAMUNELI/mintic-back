@@ -11,13 +11,9 @@ const {
 
 const router = Router();
 
-router.get("/", usuariosGet);
+router.get("/:id", [validarJWT, validarCampos], usuarioGetById);
 
-router.get(
-  "/:id",
-  [validarJWT, tieneRol("MOD"), validarCampos],
-  usuarioGetById
-);
+router.get("/nombre/:nombre", [validarJWT, validarCampos], usuariosGet);
 
 router.post(
   "/",

@@ -1,6 +1,20 @@
 const { request, response } = require("express");
 const Historia = require("../models/historia");
 
+const historiasGet = async (req = request, res = response) => {
+  const { query } = req.params;
+
+  const busqueda = {
+    titulo: { $regex: query, $options: "i" },
+    activo: true,
+    estado: "visible",
+  };
+
+  const historias = await Historia.find(busqueda);
+
+  res.json({ historias });
+};
+
 const historiasGetById = async (req = request, res = response) => {
   const usuario = req.usuarioAuth._id;
   const historias = await Historia.find({ activo: true, usuario: usuario });
@@ -120,4 +134,5 @@ module.exports = {
   historiasGetById,
   historiaGetById,
   historiaGetByEstado,
+  historiasGet,
 };

@@ -10,6 +10,27 @@ const comentariosGet = async (req = request, res = response) => {
   res.json({ comentarios });
 };
 
+const comentariosGetVisibles = async (req = request, res = response) => {
+  const { id: historia } = req.params;
+
+  const comentarios = await Comentario.find({
+    activo: true,
+    estado: "visible",
+    historia,
+  });
+
+  res.json({ comentarios });
+};
+
+const editarVisibilidadCom = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { edicion } = req.body;
+  const comentario = await Comentario.findByIdAndUpdate(id, {
+    estado: edicion,
+  });
+  res.json({ comentario });
+};
+
 const comentariosPost = async (req = request, res = response) => {
   const { contenido } = req.body;
   const { _id: usuario } = req.usuarioAuth;
@@ -73,4 +94,6 @@ module.exports = {
   comentariosPut,
   comentariosDelete,
   evaluarComentario,
+  comentariosGetVisibles,
+  editarVisibilidadCom,
 };
